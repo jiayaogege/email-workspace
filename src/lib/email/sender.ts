@@ -46,7 +46,7 @@ export class EmailSender {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result = await response.json() as { id: string };
         return {
           success: true,
           messageId: result.id,

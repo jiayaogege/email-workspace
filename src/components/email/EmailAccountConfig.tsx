@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { EmailAccount } from '@/types/email';
+import { ApiResponse } from '@/types/api';
 
 interface EmailAccountConfigProps {
   onAccountAdded?: (account: EmailAccount) => void;
@@ -32,7 +33,7 @@ export function EmailAccountConfig({ onAccountAdded }: EmailAccountConfigProps) 
   const loadAccounts = async () => {
     try {
       const response = await fetch('/api/email/accounts');
-      const result = await response.json();
+      const result = await response.json() as ApiResponse<EmailAccount[]>;
       
       if (result.success) {
         setAccounts(result.data || []);
@@ -69,15 +70,15 @@ export function EmailAccountConfig({ onAccountAdded }: EmailAccountConfigProps) 
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      const result = await response.json() as ApiResponse<EmailAccount>;
 
-      if (result.success) {
+      if (result.success && result.data) {
         toast({
           title: '添加成功',
           description: '邮箱账户已成功添加',
         });
         
-        setAccounts(prev => [...prev, result.data]);
+        setAccounts(prev => [...prev, result.data!]);
         setFormData({
           email: '',
           imapHost: 'imap.gmail.com',
@@ -89,7 +90,7 @@ export function EmailAccountConfig({ onAccountAdded }: EmailAccountConfigProps) 
         });
         setShowForm(false);
         
-        onAccountAdded?.(result.data);
+        onAccountAdded?.(result.data!);
       } else {
         toast({
           title: '添加失败',
@@ -115,7 +116,7 @@ export function EmailAccountConfig({ onAccountAdded }: EmailAccountConfigProps) 
         method: 'DELETE',
       });
 
-      const result = await response.json();
+      const result = await response.json() as ApiResponse<null>;
 
       if (result.success) {
         toast({

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
+import { ApiResponse } from '@/types/api';
 
 interface EmailComposerProps {
   onSend?: () => void;
@@ -46,7 +47,7 @@ export function EmailComposer({ onSend, defaultTo = '', defaultSubject = '' }: E
         }),
       });
 
-      const result = await response.json();
+      const result = await response.json() as ApiResponse<null>;
 
       if (result.success) {
         toast({

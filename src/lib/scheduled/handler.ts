@@ -3,7 +3,6 @@ import emailDB from '@/lib/db/email';
 export default async function scheduledHandler(
     controller: ScheduledController,
     env: CloudflareEnv,
-    ctx: ExecutionContext
 ): Promise<void> {
 
     if (env.ENABLE_AUTO_DEL === 'false') {

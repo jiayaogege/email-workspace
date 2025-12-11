@@ -1,7 +1,7 @@
-import withAuth from '../../../../lib/auth/auth';
-import { sendEmailWithEnv } from '../../../../lib/email/sender';
-import { success, failure } from '../../../../types/api';
-import { SendEmailRequest } from '../../../../types/email';
+import withAuth from '@/lib/auth/auth';
+import { sendEmailWithEnv } from '@/lib/email/sender';
+import { success, failure } from '@/types/api';
+import { SendEmailRequest } from '@/types/email';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
