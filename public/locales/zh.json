@@ -111,6 +111,7 @@
   "serviceProvider": "服务提供商",
   "selectProvider": "选择提供商",
   "advancedSettings": "高级设置",
+  "hideAdvancedSettings": "隐藏高级设置",
   "email": "邮箱地址",
   "smtpUsername": "SMTP 用户名",
   "save": "保存",

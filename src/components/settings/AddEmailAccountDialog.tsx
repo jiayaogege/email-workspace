@@ -267,7 +267,7 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                 {showAdvanced ? (
                   <>
                     <ChevronUp className="h-4 w-4 mr-1.5" />
-                    {t("hideAdvancedSettings") || "隐藏高级设置"}
+                    {t("hideAdvancedSettings")}
                   </>
                 ) : (
                   <>
