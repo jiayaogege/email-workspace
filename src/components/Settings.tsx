@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useSettingsStore } from "@/lib/store/settings";
-import { Settings as SettingsIcon, LogOut, Trash2 } from "lucide-react";
+import { Settings as SettingsIcon, LogOut, Trash2, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import useAuthStore from "@/lib/store/auth";
 import useTranslation from "@/lib/hooks/useTranslation";
 import DeleteDialog from "@/components/common/DeleteDialog";
 import { EmailAccountList } from "./settings/EmailAccountList";
+import useEmailStore from "@/lib/store/email";
 
 export default function Settings() {
   const { t } = useTranslation();
@@ -81,6 +82,14 @@ export default function Settings() {
                 <p className="text-sm text-muted-foreground mt-0.5">{t('settingsDesc')}</p>
               </div>
             </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => useEmailStore.getState().setSettingsOpen(false)}
+              className="rounded-xl"
+            >
+              <X className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>
@@ -88,11 +97,11 @@ export default function Settings() {
       {/* Content */}
       <div className="flex-1 min-h-0">
         <ScrollArea className="h-full">
-          <div className="p-6 space-y-6">
+          <div className="p-6 space-y-8">
             {/* Appearance Section */}
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-foreground mb-1">{t('appearance')}</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-2">{t('appearance')}</h3>
                 <p className="text-sm text-muted-foreground">{t('appearanceDesc')}</p>
               </div>
 
@@ -101,7 +110,7 @@ export default function Settings() {
               {/* Theme */}
               <div className="space-y-3">
                 <Label className="text-sm font-medium">{t('theme')}</Label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {['light', 'dark', 'system'].map((themeOption) => (
                     <Button
                       key={themeOption}
@@ -118,7 +127,7 @@ export default function Settings() {
               {/* Language */}
               <div className="space-y-3">
                 <Label className="text-sm font-medium">{t('language')}</Label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button
                     variant={storedLanguage === 'zh' ? 'default' : 'outline'}
                     onClick={() => setLanguage('zh')}
@@ -182,7 +191,7 @@ export default function Settings() {
             {/* General Section */}
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-foreground mb-1">{t('general')}</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-2">{t('general')}</h3>
                 <p className="text-sm text-muted-foreground">{t('generalDesc')}</p>
               </div>
 
@@ -191,7 +200,7 @@ export default function Settings() {
               {/* Edit Mode */}
               <div className="space-y-3">
                 <Label className="text-sm font-medium">{t('editMode')}</Label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button
                     variant={editMode ? 'default' : 'outline'}
                     onClick={() => setEditMode(true)}
@@ -214,7 +223,7 @@ export default function Settings() {
               {/* Auto Refresh Interval */}
               <div className="space-y-3">
                 <Label className="text-sm font-medium">{t('autoRefreshInterval')}</Label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {intervalOptions.map((option) => (
                     <Button
                       key={option.value}
@@ -239,7 +248,7 @@ export default function Settings() {
             {/* Account Section */}
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-foreground mb-1">{t('account')}</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-2">{t('account')}</h3>
                 <p className="text-sm text-muted-foreground">{t('accountDesc')}</p>
               </div>
 
