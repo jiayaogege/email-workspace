@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { EmailAccount } from '@/types/email';
 import { ApiResponse } from '@/types/api';
+import { apiFetch } from '@/lib/api/client';
 
 interface EmailAccountConfigProps {
   onAccountAdded?: (account: EmailAccount) => void;
@@ -32,7 +33,7 @@ export function EmailAccountConfig({ onAccountAdded }: EmailAccountConfigProps) 
   // 加载邮箱账户列表
   const loadAccounts = async () => {
     try {
-      const response = await fetch('/api/email/accounts');
+      const response = await apiFetch('/api/email/accounts');
       const result = await response.json() as ApiResponse<EmailAccount[]>;
       
       if (result.success) {
@@ -62,7 +63,7 @@ export function EmailAccountConfig({ onAccountAdded }: EmailAccountConfigProps) 
     setIsAdding(true);
 
     try {
-      const response = await fetch('/api/email/accounts', {
+      const response = await apiFetch('/api/email/accounts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +113,7 @@ export function EmailAccountConfig({ onAccountAdded }: EmailAccountConfigProps) 
 
   const handleDeleteAccount = async (accountId: string) => {
     try {
-      const response = await fetch(`/api/email/accounts?id=${accountId}`, {
+      const response = await apiFetch(`/api/email/accounts?id=${accountId}`, {
         method: 'DELETE',
       });
 

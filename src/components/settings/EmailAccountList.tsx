@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import DeleteDialog from "@/components/common/DeleteDialog";
 import { AddEmailAccountDialog } from "./AddEmailAccountDialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { apiFetch } from "@/lib/api/client";
 
 export function EmailAccountList() {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ export function EmailAccountList() {
   const fetchAccounts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/email/accounts");
+      const res = await apiFetch("/api/email/accounts");
       if (res.ok) {
         const response = await res.json() as ApiResponse<EmailAccount[]>;
         setAccounts(response.data || []);
@@ -43,7 +44,7 @@ export function EmailAccountList() {
 
   const handleDelete = async (id: string) => {
     try {
-      const res = await fetch(`/api/email/accounts?id=${id}`, {
+      const res = await apiFetch(`/api/email/accounts?id=${id}`, {
         method: "DELETE",
       });
       
