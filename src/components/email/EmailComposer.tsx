@@ -11,11 +11,12 @@ import { ApiResponse } from '@/types/api';
 
 interface EmailComposerProps {
   onSend?: () => void;
+  onClose?: () => void;
   defaultTo?: string;
   defaultSubject?: string;
 }
 
-export function EmailComposer({ onSend, defaultTo = '', defaultSubject = '' }: EmailComposerProps) {
+export default function EmailComposer({ onSend, onClose, defaultTo = '', defaultSubject = '' }: EmailComposerProps) {
   const [to, setTo] = useState(defaultTo);
   const [subject, setSubject] = useState(defaultSubject);
   const [body, setBody] = useState('');
@@ -61,6 +62,7 @@ export function EmailComposer({ onSend, defaultTo = '', defaultSubject = '' }: E
         setBody('');
         
         onSend?.();
+        onClose?.();
       } else {
         toast({
           title: '发送失败',
@@ -128,12 +130,16 @@ export function EmailComposer({ onSend, defaultTo = '', defaultSubject = '' }: E
           <Button
             variant="outline"
             onClick={() => {
-              setTo('');
-              setSubject('');
-              setBody('');
+              if (onClose) {
+                onClose();
+              } else {
+                setTo('');
+                setSubject('');
+                setBody('');
+              }
             }}
           >
-            清空
+            取消
           </Button>
           <Button
             onClick={handleSend}

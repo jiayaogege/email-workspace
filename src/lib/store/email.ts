@@ -34,6 +34,7 @@ interface EmailStoreState {
   hasMore: boolean;
   selectedEmailId: number | null;
   settingsOpen: boolean;
+  composerOpen: boolean;
   lastSyncedAt: string | null;
   visibleEmailId: number | null;
   filters: EmailFilters;
@@ -41,6 +42,7 @@ interface EmailStoreState {
   appendEmails: (emails: Email[], total: number, hasMore: boolean) => void;
   selectEmail: (emailId: number | null) => void;
   setSettingsOpen: (open: boolean) => void;
+  setComposerOpen: (open: boolean) => void;
   setLastSyncedAt: (sentAt: string | null) => void;
   setVisibleEmailId: (emailId: number | null) => void;
   removeEmail: (emailId: number) => void;
@@ -56,6 +58,7 @@ const useEmailStore = create<EmailStoreState>((set, get) => ({
   hasMore: false,
   selectedEmailId: null,
   settingsOpen: false,
+  composerOpen: false,
   lastSyncedAt: null,
   visibleEmailId: null,
   filters: createDefaultFilters(),
@@ -78,6 +81,7 @@ const useEmailStore = create<EmailStoreState>((set, get) => ({
   },
   selectEmail: (emailId) => set({ selectedEmailId: emailId }),
   setSettingsOpen: (open) => set({ settingsOpen: open }),
+  setComposerOpen: (open) => set({ composerOpen: open }),
   setLastSyncedAt: (sentAt) => set({ lastSyncedAt: sentAt }),
   setVisibleEmailId: (emailId) => set({ visibleEmailId: emailId }),
   removeEmail: (emailId) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { RefreshCw, Settings as SettingsIcon, CheckSquare, Square, Trash2 } from "lucide-react";
+import { RefreshCw, Settings as SettingsIcon, CheckSquare, Square, Trash2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "@/components/common/DeleteDialog";
 import useTranslation from "@/lib/hooks/useTranslation";
@@ -140,6 +140,20 @@ export default function EmailListHeader({
             <Button size="icon" onClick={onRefresh} disabled={loading} className="shadow-sm hover:shadow-md transition-all duration-200">
               <motion.div animate={{ rotate: loading ? 360 : 0 }} transition={{ repeat: loading ? Infinity : 0, duration: 0.8, ease: "linear" }}>
                 <RefreshCw />
+              </motion.div>
+            </Button>
+            <Button
+              size="icon"
+              variant="default"
+              className="shadow-sm hover:shadow-md transition-all duration-200"
+              onClick={() => useEmailStore.getState().setComposerOpen(true)}
+            >
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              >
+                <Plus />
               </motion.div>
             </Button>
           </motion.div>

@@ -12,6 +12,7 @@ import MobileEmailDrawer from "@/components/email/MobileEmailDrawer";
 import MobileSettingsDrawer from "@/components/email/MobileSettingsDrawer";
 import EmailDetail from "@/components/email/EmailDetail";
 import Settings from "@/components/Settings";
+import EmailComposer from "@/components/email/EmailComposer";
 
 export default function EmailList() {
   const { isMobile } = useDevice();
@@ -28,6 +29,8 @@ export default function EmailList() {
   const selectEmail = useEmailStore((state) => state.selectEmail);
   const settingsOpen = useEmailStore((state) => state.settingsOpen);
   const setSettingsOpen = useEmailStore((state) => state.setSettingsOpen);
+  const composerOpen = useEmailStore((state) => state.composerOpen);
+  const setComposerOpen = useEmailStore((state) => state.setComposerOpen);
 
   const deleteEmailMutation = useDeleteEmail();
   const batchDeleteMutation = useBatchDeleteEmails();
@@ -156,7 +159,15 @@ export default function EmailList() {
         </aside>
 
         <main className="hidden md:flex flex-1 bg-background overflow-hidden">
-          <div className="w-full max-w-5xl mx-auto">{settingsOpen ? <Settings /> : <EmailDetail email={selectedEmail} />}</div>
+          <div className="w-full max-w-5xl mx-auto">
+            {settingsOpen ? (
+              <Settings />
+            ) : composerOpen ? (
+              <EmailComposer onClose={() => setComposerOpen(false)} />
+            ) : (
+              <EmailDetail email={selectedEmail} />
+            )}
+          </div>
         </main>
       </div>
 
