@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -20,9 +21,11 @@ export default function Settings() {
   const {
     theme: storedTheme,
     language: storedLanguage,
+    backgroundImage,
     autoRefreshInterval,
     editMode,
     setLanguage,
+    setBackgroundImage,
     setAutoRefreshInterval,
     setTheme: setStoredTheme,
     setEditMode,
@@ -131,6 +134,48 @@ export default function Settings() {
                     English
                   </Button>
                 </div>
+              </div>
+
+              {/* Background Image */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">{t("backgroundImage")}</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="backgroundImage"
+                    value={backgroundImage || ""}
+                    onChange={(e) => setBackgroundImage(e.target.value)}
+                    placeholder={t("backgroundImagePlaceholder") || "Enter image URL..."}
+                    className="flex-1 rounded-xl"
+                  />
+                  {backgroundImage && (
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => setBackgroundImage("")}
+                      title={t("clear")}
+                      className="rounded-xl"
+                    >
+                      <span className="sr-only">{t("clear")}</span>
+                      <span aria-hidden="true">×</span>
+                    </Button>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {t("backgroundImageDesc")}
+                </p>
+                {backgroundImage && (
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl border mt-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img 
+                      src={backgroundImage} 
+                      alt="Background preview" 
+                      className="object-cover w-full h-full"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
