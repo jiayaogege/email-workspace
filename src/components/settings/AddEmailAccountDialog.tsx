@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { EmailAccountConfig } from "@/types/email";
 import { Plus, ChevronDown, ChevronUp } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { apiFetch } from "@/lib/api/client";
 
 interface AddEmailAccountDialogProps {
   onAccountAdded?: () => void;
@@ -126,7 +127,7 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
     setLoading(true);
 
     try {
-      const res = await fetch("/api/email/accounts", {
+      const res = await apiFetch("/api/email/accounts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
