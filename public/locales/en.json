@@ -86,5 +86,20 @@
   "body": "Body",
   "bodyPlaceholder": "Email body content",
   "sending": "Sending...",
-  "sendEmail": "Send Email"
+  "sendEmail": "Send Email",
+  "emailAccounts": "Email Accounts",
+  "emailAccountsDesc": "Manage connected email accounts",
+  "addAccount": "Add Account",
+  "addAccountTitle": "Add Email Account",
+  "addAccountDesc": "Enter your email details to connect an account",
+  "host": "Host",
+  "port": "Port",
+  "username": "Username",
+  "password": "Password",
+  "imapSettings": "IMAP Settings",
+  "smtpSettings": "SMTP Settings",
+  "defaultAccount": "Default Account",
+  "optional": "Optional",
+  "accountAdded": "Account added",
+  "accountAddFailed": "Failed to add account"
 }

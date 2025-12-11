@@ -86,5 +86,20 @@
   "body": "正文",
   "bodyPlaceholder": "邮件正文内容",
   "sending": "发送中...",
-  "sendEmail": "发送邮件"
+  "sendEmail": "发送邮件",
+  "emailAccounts": "邮箱账户",
+  "emailAccountsDesc": "管理已连接的邮箱账户",
+  "addAccount": "添加账户",
+  "addAccountTitle": "添加邮箱账户",
+  "addAccountDesc": "输入您的邮箱详细信息以连接账户",
+  "host": "主机",
+  "port": "端口",
+  "username": "用户名",
+  "password": "密码",
+  "imapSettings": "IMAP 设置",
+  "smtpSettings": "SMTP 设置",
+  "defaultAccount": "默认账户",
+  "optional": "可选",
+  "accountAdded": "账户已添加",
+  "accountAddFailed": "添加账户失败"
 }

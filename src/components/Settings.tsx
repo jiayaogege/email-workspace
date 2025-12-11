@@ -11,6 +11,7 @@ import { useTheme } from "next-themes";
 import useAuthStore from "@/lib/store/auth";
 import useTranslation from "@/lib/hooks/useTranslation";
 import DeleteDialog from "@/components/common/DeleteDialog";
+import { EmailAccountList } from "./settings/EmailAccountList";
 
 export default function Settings() {
   const { t } = useTranslation();
@@ -183,6 +184,11 @@ export default function Settings() {
               </div>
 
 
+            </div>
+
+            {/* Email Accounts Section */}
+            <div className="space-y-4">
+               <EmailAccountList />
             </div>
 
             {/* Account Section */}
