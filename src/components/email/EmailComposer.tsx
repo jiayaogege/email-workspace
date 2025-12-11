@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { ApiResponse } from '@/types/api';
+import { useTranslation } from 'react-i18next';
 
 interface EmailComposerProps {
   onSend?: () => void;
@@ -17,6 +18,7 @@ interface EmailComposerProps {
 }
 
 export default function EmailComposer({ onSend, onClose, defaultTo = '', defaultSubject = '' }: EmailComposerProps) {
+  const { t } = useTranslation();
   const [to, setTo] = useState(defaultTo);
   const [subject, setSubject] = useState(defaultSubject);
   const [body, setBody] = useState('');
@@ -26,8 +28,8 @@ export default function EmailComposer({ onSend, onClose, defaultTo = '', default
   const handleSend = async () => {
     if (!to || !subject || !body) {
       toast({
-        title: '信息不完整',
-        description: '请填写收件人、主题和正文',
+        title: t('incompleteInfo'),
+        description: t('fillRequired'),
         variant: 'destructive',
       });
       return;
@@ -52,8 +54,8 @@ export default function EmailComposer({ onSend, onClose, defaultTo = '', default
 
       if (result.success) {
         toast({
-          title: '发送成功',
-          description: '邮件已成功发送',
+          title: t('sendSuccess'),
+          description: t('emailSentSuccess'),
         });
         
         // 清空表单
@@ -65,16 +67,16 @@ export default function EmailComposer({ onSend, onClose, defaultTo = '', default
         onClose?.();
       } else {
         toast({
-          title: '发送失败',
-          description: result.error || '邮件发送失败',
+          title: t('sendFailed'),
+          description: result.error || t('sendFailed'),
           variant: 'destructive',
         });
       }
     } catch (error) {
       console.error('发送邮件错误:', error);
       toast({
-        title: '发送失败',
-        description: '网络错误，请稍后重试',
+        title: t('sendFailed'),
+        description: t('networkError'),
         variant: 'destructive',
       });
     } finally {
@@ -85,18 +87,18 @@ export default function EmailComposer({ onSend, onClose, defaultTo = '', default
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>发送邮件</CardTitle>
+        <CardTitle>{t('composeEmail')}</CardTitle>
         <CardDescription>
-          通过配置的邮箱账户发送邮件
+          {t('composeEmailDesc')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="to">收件人</Label>
+          <Label htmlFor="to">{t('recipient')}</Label>
           <Input
             id="to"
             type="email"
-            placeholder="recipient@example.com"
+            placeholder={t('recipientPlaceholder')}
             value={to}
             onChange={(e) => setTo(e.target.value)}
             required
@@ -104,10 +106,10 @@ export default function EmailComposer({ onSend, onClose, defaultTo = '', default
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="subject">主题</Label>
+          <Label htmlFor="subject">{t('subject')}</Label>
           <Input
             id="subject"
-            placeholder="邮件主题"
+            placeholder={t('subjectPlaceholder')}
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             required
@@ -115,10 +117,10 @@ export default function EmailComposer({ onSend, onClose, defaultTo = '', default
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="body">正文</Label>
+          <Label htmlFor="body">{t('body')}</Label>
           <Textarea
             id="body"
-            placeholder="邮件正文内容"
+            placeholder={t('bodyPlaceholder')}
             value={body}
             onChange={(e) => setBody(e.target.value)}
             rows={8}
@@ -139,13 +141,13 @@ export default function EmailComposer({ onSend, onClose, defaultTo = '', default
               }
             }}
           >
-            取消
+            {t('cancel')}
           </Button>
           <Button
             onClick={handleSend}
             disabled={isSending || !to || !subject || !body}
           >
-            {isSending ? '发送中...' : '发送邮件'}
+            {isSending ? t('sending') : t('sendEmail')}
           </Button>
         </div>
       </CardContent>

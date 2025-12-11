@@ -71,5 +71,20 @@
   "emailTypeSubscriptionLink": "Subscription Link",
   "emailTypeInternalLink": "Internal Link",
   "emailTypeOtherLink": "Other Link",
-  "emailTypeNone": "None"
+  "emailTypeNone": "None",
+  "composeEmail": "Compose Email",
+  "composeEmailDesc": "Write and send a new email",
+  "incompleteInfo": "Incomplete Information",
+  "fillRequired": "Please fill in recipient, subject and body",
+  "sendSuccess": "Send Success",
+  "emailSentSuccess": "Email sent successfully",
+  "sendFailed": "Send Failed",
+  "networkError": "Network error, please try again later",
+  "recipient": "Recipient",
+  "recipientPlaceholder": "recipient@example.com",
+  "subjectPlaceholder": "Email subject",
+  "body": "Body",
+  "bodyPlaceholder": "Email body content",
+  "sending": "Sending...",
+  "sendEmail": "Send Email"
 }

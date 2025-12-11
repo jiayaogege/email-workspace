@@ -11,10 +11,9 @@ let handler: OpenNextHandler | undefined;
 
 if (process.env.NODE_ENV === "production") {
   // 动态导入，避免Next.js构建错误
-  // @ts-expect-error - 忽略OpenNext worker模块的导入错误，该模块将在构建过程中生成
-  import("../.open-next/worker.js").then((module) => {
-    handler = module.default as OpenNextHandler;
-  });
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const workerModule = require("../.open-next/worker.js");
+  handler = workerModule.default as OpenNextHandler;
 }
 
 export default {

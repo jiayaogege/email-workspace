@@ -10,6 +10,7 @@ import EmailListContent from "@/components/email/EmailListContent";
 import { EmailListInteractionsProvider } from "@/components/email/EmailListInteractionsContext";
 import MobileEmailDrawer from "@/components/email/MobileEmailDrawer";
 import MobileSettingsDrawer from "@/components/email/MobileSettingsDrawer";
+import MobileEmailComposerDrawer from "@/components/email/MobileEmailComposerDrawer";
 import EmailDetail from "@/components/email/EmailDetail";
 import Settings from "@/components/Settings";
 import EmailComposer from "@/components/email/EmailComposer";
@@ -174,6 +175,8 @@ export default function EmailList() {
       <MobileEmailDrawer open={isMobileDrawerOpen} email={selectedEmail} onClose={() => setIsMobileDrawerOpen(false)} />
 
       <MobileSettingsDrawer open={mobileSettingsOpen} onOpenChange={setMobileSettingsOpen} />
+      
+      <MobileEmailComposerDrawer open={isMobile && composerOpen} />
     </div>
   );
 }

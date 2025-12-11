@@ -71,5 +71,20 @@
   "emailTypeSubscriptionLink": "订阅链接",
   "emailTypeInternalLink": "内部链接",
   "emailTypeOtherLink": "其他链接",
-  "emailTypeNone": "无"
+  "emailTypeNone": "无",
+  "composeEmail": "发送邮件",
+  "composeEmailDesc": "撰写并发送新邮件",
+  "incompleteInfo": "信息不完整",
+  "fillRequired": "请填写收件人、主题和正文",
+  "sendSuccess": "发送成功",
+  "emailSentSuccess": "邮件已成功发送",
+  "sendFailed": "发送失败",
+  "networkError": "网络错误，请稍后重试",
+  "recipient": "收件人",
+  "recipientPlaceholder": "recipient@example.com",
+  "subjectPlaceholder": "邮件主题",
+  "body": "正文",
+  "bodyPlaceholder": "邮件正文内容",
+  "sending": "发送中...",
+  "sendEmail": "发送邮件"
 }
