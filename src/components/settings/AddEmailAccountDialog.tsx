@@ -180,35 +180,37 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
           {t("addAccount")}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto px-6">
+      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
         <form onSubmit={handleSubmit}>
-          <DialogHeader className="px-0">
-            <DialogTitle>{t("addAccount")}</DialogTitle>
-            <DialogDescription>
+          <DialogHeader>
+            <DialogTitle className="text-xl">{t("addAccount")}</DialogTitle>
+            <DialogDescription className="pt-1.5">
               {t("addAccountDesc")}
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-6 px-0">
+          
+          <div className="space-y-5 py-6">
             {/* Service Provider Selection */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3">
-              <Label className="text-right sm:text-right pt-2">{t("serviceProvider")}</Label>
-              <div className="col-span-1 sm:col-span-3">
-                <Select value={selectedPreset} onValueChange={handlePresetChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("selectProvider")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="custom">{t("custom")}</SelectItem>
-                    {Object.entries(PRESETS).map(([key, preset]) => (
-                      <SelectItem key={key} value={key}>{preset.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="provider" className="text-sm font-medium">
+                {t("serviceProvider")}
+              </Label>
+              <Select value={selectedPreset} onValueChange={handlePresetChange}>
+                <SelectTrigger id="provider">
+                  <SelectValue placeholder={t("selectProvider")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="custom">{t("custom")}</SelectItem>
+                  {Object.entries(PRESETS).map(([key, preset]) => (
+                    <SelectItem key={key} value={key}>{preset.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3">
-              <Label htmlFor="email" className="text-right sm:text-right pt-2">
+            {/* Email */}
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium">
                 {t("email")}
               </Label>
               <Input
@@ -217,12 +219,14 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="col-span-1 sm:col-span-3"
+                placeholder="example@email.com"
                 required
               />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3">
-              <Label htmlFor="username" className="text-right sm:text-right pt-2">
+
+            {/* Username */}
+            <div className="space-y-2">
+              <Label htmlFor="username" className="text-sm font-medium">
                 {t("smtpUsername")}
               </Label>
               <Input
@@ -230,12 +234,14 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="col-span-1 sm:col-span-3"
+                placeholder={t("smtpUsername")}
                 required
               />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3">
-              <Label htmlFor="password" className="text-right sm:text-right pt-2">
+
+            {/* Password */}
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-sm font-medium">
                 {t("password")}
               </Label>
               <Input
@@ -244,30 +250,45 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="col-span-1 sm:col-span-3"
+                placeholder="••••••••"
                 required
               />
             </div>
 
-            <div className="col-span-1 sm:col-span-4 flex items-center justify-end">
+            {/* Advanced Settings Toggle */}
+            <div className="flex items-center justify-center pt-2">
               <Button 
                 type="button" 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className="text-xs text-muted-foreground"
+                className="text-sm text-muted-foreground hover:text-foreground"
               >
-                {showAdvanced ? <ChevronUp className="h-3 w-3 mr-1" /> : <ChevronDown className="h-3 w-3 mr-1" />}
-                {t("advancedSettings")}
+                {showAdvanced ? (
+                  <>
+                    <ChevronUp className="h-4 w-4 mr-1.5" />
+                    {t("hideAdvancedSettings") || "隐藏高级设置"}
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="h-4 w-4 mr-1.5" />
+                    {t("advancedSettings")}
+                  </>
+                )}
               </Button>
             </div>
             
+            {/* Advanced Settings */}
             {showAdvanced && (
-              <div className="col-span-1 sm:col-span-4 space-y-4 border rounded-md p-4 bg-muted/20">
+              <div className="space-y-5 border rounded-lg p-5 bg-muted/30">
+                {/* IMAP Settings */}
                 <div className="space-y-4">
-                  <div className="font-medium text-sm text-primary">{t("imapSettings")}</div>
-                  <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3">
-                    <Label htmlFor="imapHost" className="text-right sm:text-right pt-2 text-xs">
+                  <div className="flex items-center gap-2 pb-2 border-b">
+                    <div className="font-semibold text-sm">{t("imapSettings")}</div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="imapHost" className="text-sm font-medium">
                       {t("host")}
                     </Label>
                     <Input
@@ -275,12 +296,12 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                       name="imapHost"
                       value={formData.imapHost}
                       onChange={handleChange}
-                      className="col-span-1 sm:col-span-3"
                       placeholder="imap.example.com"
                     />
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3">
-                    <Label htmlFor="imapPort" className="text-right sm:text-right pt-2 text-xs">
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="imapPort" className="text-sm font-medium">
                       {t("port")}
                     </Label>
                     <Input
@@ -289,15 +310,19 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                       type="number"
                       value={formData.imapPort}
                       onChange={handleChange}
-                      className="col-span-1 sm:col-span-3"
+                      placeholder="993"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-4 pt-2 border-t">
-                  <div className="font-medium text-sm text-primary">{t("smtpSettings")}</div>
-                  <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3">
-                    <Label htmlFor="smtpHost" className="text-right sm:text-right pt-2 text-xs">
+                {/* SMTP Settings */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 pb-2 border-b">
+                    <div className="font-semibold text-sm">{t("smtpSettings")}</div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="smtpHost" className="text-sm font-medium">
                       {t("host")}
                     </Label>
                     <Input
@@ -305,12 +330,12 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                       name="smtpHost"
                       value={formData.smtpHost}
                       onChange={handleChange}
-                      className="col-span-1 sm:col-span-3"
                       placeholder="smtp.example.com"
                     />
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3">
-                    <Label htmlFor="smtpPort" className="text-right sm:text-right pt-2 text-xs">
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="smtpPort" className="text-sm font-medium">
                       {t("port")}
                     </Label>
                     <Input
@@ -319,14 +344,15 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                       type="number"
                       value={formData.smtpPort}
                       onChange={handleChange}
-                      className="col-span-1 sm:col-span-3"
+                      placeholder="587"
                     />
                   </div>
                 </div>
               </div>
             )}
           </div>
-          <DialogFooter className="px-0">
+
+          <DialogFooter className="gap-2 sm:gap-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               {t("cancel")}
             </Button>
