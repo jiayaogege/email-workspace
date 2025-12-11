@@ -49,115 +49,109 @@ export default function EmailListHeader({
       </div>
 
       <AnimatePresence mode="popLayout">
-        {hasSelection ? (
-          <motion.div
-            key="selection-actions"
-            layout
-            initial={{ opacity: 0, scale: 0.95, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -8 }}
-            transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
-            className="flex items-center gap-2"
-          >
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onToggleSelectAll}
+        <div className="flex items-center gap-2">
+          {/* 始终显示的按钮 */}
+          <Button variant="ghost" size="icon" onClick={onOpenSettings}>
+            <motion.div
+              layout
+              whileHover={{ rotate: 20 }}
+              whileTap={{ rotate: -20 }}
+              transition={{ type: "spring", stiffness: 400, damping: 15 }}
             >
-              {isAllSelected ? (
-                <motion.div
-                  key="all-selected"
-                  layout
-                  initial={{ rotate: -90, scale: 0.8, opacity: 0 }}
-                  animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <CheckSquare />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="partial-selected"
-                  layout
-                  initial={{ rotate: 90, scale: 0.8, opacity: 0 }}
-                  animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Square />
-                </motion.div>
-              )}
-            </Button>
+              <SettingsIcon />
+            </motion.div>
+          </Button>
+          <Button size="icon" onClick={onRefresh} disabled={loading} className="shadow-sm hover:shadow-md transition-all duration-200">
+            <motion.div animate={{ rotate: loading ? 360 : 0 }} transition={{ repeat: loading ? Infinity : 0, duration: 0.8, ease: "linear" }}>
+              <RefreshCw />
+            </motion.div>
+          </Button>
+          <Button
+            size="icon"
+            variant="default"
+            className="shadow-sm hover:shadow-md transition-all duration-200"
+            onClick={() => useEmailStore.getState().setComposerOpen(true)}
+          >
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            >
+              <Plus />
+            </motion.div>
+          </Button>
 
-            <DeleteDialog
-              trigger={
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hover:bg-destructive/10 hover:text-destructive"
-                  onClick={(event) => event.stopPropagation()}
-                >
+          {/* 根据选择状态显示的按钮 */}
+          {hasSelection && (
+            <motion.div
+              key="selection-actions"
+              layout
+              initial={{ opacity: 0, scale: 0.95, y: -8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -8 }}
+              transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
+              className="flex items-center gap-2"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={onToggleSelectAll}
+              >
+                {isAllSelected ? (
                   <motion.div
-                    whileHover={{ rotate: -12 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    key="all-selected"
+                    layout
+                    initial={{ rotate: -90, scale: 0.8, opacity: 0 }}
+                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <Trash2 />
+                    <CheckSquare />
                   </motion.div>
-                </Button>
-              }
-              title={t("batchDeleteConfirm")}
-              description={t("batchDeleteDesc", { count: selectionCount })}
-              onConfirm={(event) => {
-                event?.stopPropagation();
-                onBatchDelete();
-              }}
-              cancelText={t("cancel")}
-              confirmText={t("delete")}
-              allowUnsafeHtml
-            />
+                ) : (
+                  <motion.div
+                    key="partial-selected"
+                    layout
+                    initial={{ rotate: 90, scale: 0.8, opacity: 0 }}
+                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Square />
+                  </motion.div>
+                )}
+              </Button>
 
-            <Button variant="outline" onClick={onClearSelection}>{t("cancel")}</Button>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="default-actions"
-            layout
-            initial={{ opacity: 0, scale: 0.95, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -8 }}
-            transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
-            className="flex items-center gap-2"
-          >
-            <Button variant="ghost" size="icon" onClick={onOpenSettings}>
-              <motion.div
-                layout
-                whileHover={{ rotate: 20 }}
-                whileTap={{ rotate: -20 }}
-                transition={{ type: "spring", stiffness: 400, damping: 15 }}
-              >
-                <SettingsIcon />
-              </motion.div>
-            </Button>
-            <Button size="icon" onClick={onRefresh} disabled={loading} className="shadow-sm hover:shadow-md transition-all duration-200">
-              <motion.div animate={{ rotate: loading ? 360 : 0 }} transition={{ repeat: loading ? Infinity : 0, duration: 0.8, ease: "linear" }}>
-                <RefreshCw />
-              </motion.div>
-            </Button>
-            <Button
-              size="icon"
-              variant="default"
-              className="shadow-sm hover:shadow-md transition-all duration-200"
-              onClick={() => useEmailStore.getState().setComposerOpen(true)}
-            >
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 400, damping: 15 }}
-              >
-                <Plus />
-              </motion.div>
-            </Button>
-          </motion.div>
-        )}
+              <DeleteDialog
+                trigger={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="hover:bg-destructive/10 hover:text-destructive"
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <motion.div
+                      whileHover={{ rotate: -12 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                    >
+                      <Trash2 />
+                    </motion.div>
+                  </Button>
+                }
+                title={t("batchDeleteConfirm")}
+                description={t("batchDeleteDesc", { count: selectionCount })}
+                onConfirm={(event) => {
+                  event?.stopPropagation();
+                  onBatchDelete();
+                }}
+                cancelText={t("cancel")}
+                confirmText={t("delete")}
+                allowUnsafeHtml
+              />
+
+              <Button variant="outline" onClick={onClearSelection}>{t("cancel")}</Button>
+            </motion.div>
+          )}
+        </div>
       </AnimatePresence>
     </motion.header>
   );
