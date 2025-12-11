@@ -190,9 +190,9 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
           </DialogHeader>
           <div className="grid gap-6 py-6 px-0">
             {/* Service Provider Selection */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right">{t("serviceProvider")}</Label>
-              <div className="col-span-3">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label className="text-right sm:text-right">{t("serviceProvider")}</Label>
+              <div className="col-span-1 sm:col-span-3">
                 <Select value={selectedPreset} onValueChange={handlePresetChange}>
                   <SelectTrigger>
                     <SelectValue placeholder={t("selectProvider")} />
@@ -207,8 +207,8 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
               </div>
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right sm:text-right">
                 {t("email")}
               </Label>
               <Input
@@ -217,12 +217,12 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right sm:text-right">
                 {t("smtpUsername")}
               </Label>
               <Input
@@ -230,12 +230,12 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="password" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="password" className="text-right sm:text-right">
                 {t("password")}
               </Label>
               <Input
@@ -244,12 +244,12 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
 
-            <div className="col-span-4 flex items-center justify-end">
+            <div className="col-span-1 sm:col-span-4 flex items-center justify-end">
               <Button 
                 type="button" 
                 variant="ghost" 
@@ -263,11 +263,11 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
             </div>
             
             {showAdvanced && (
-              <div className="col-span-4 space-y-4 border rounded-md p-4 bg-muted/20">
+              <div className="col-span-1 sm:col-span-4 space-y-4 border rounded-md p-4 bg-muted/20">
                 <div className="space-y-4">
                   <div className="font-medium text-sm text-primary">{t("imapSettings")}</div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="imapHost" className="text-right text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                    <Label htmlFor="imapHost" className="text-right sm:text-right text-xs">
                       {t("host")}
                     </Label>
                     <Input
@@ -275,12 +275,12 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                       name="imapHost"
                       value={formData.imapHost}
                       onChange={handleChange}
-                      className="col-span-3"
+                      className="col-span-1 sm:col-span-3"
                       placeholder="imap.example.com"
                     />
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="imapPort" className="text-right text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                    <Label htmlFor="imapPort" className="text-right sm:text-right text-xs">
                       {t("port")}
                     </Label>
                     <Input
@@ -289,15 +289,15 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                       type="number"
                       value={formData.imapPort}
                       onChange={handleChange}
-                      className="col-span-3"
+                      className="col-span-1 sm:col-span-3"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-4 pt-2 border-t">
                   <div className="font-medium text-sm text-primary">{t("smtpSettings")}</div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="smtpHost" className="text-right text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                    <Label htmlFor="smtpHost" className="text-right sm:text-right text-xs">
                       {t("host")}
                     </Label>
                     <Input
@@ -305,12 +305,12 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                       name="smtpHost"
                       value={formData.smtpHost}
                       onChange={handleChange}
-                      className="col-span-3"
+                      className="col-span-1 sm:col-span-3"
                       placeholder="smtp.example.com"
                     />
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="smtpPort" className="text-right text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                    <Label htmlFor="smtpPort" className="text-right sm:text-right text-xs">
                       {t("port")}
                     </Label>
                     <Input
@@ -319,7 +319,7 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                       type="number"
                       value={formData.smtpPort}
                       onChange={handleChange}
-                      className="col-span-3"
+                      className="col-span-1 sm:col-span-3"
                     />
                   </div>
                 </div>
