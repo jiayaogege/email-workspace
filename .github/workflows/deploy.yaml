@@ -1,0 +1,50 @@
+name: 🚀 Deploy Alle to Cloudflare Workers
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  Deploy:
+    name: Deploy Alle
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      D1_DATABASE_ID: ${{ secrets.D1_DATABASE_ID }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+      ENABLE_AI_EXTRACT: ${{ vars.ENABLE_AI_EXTRACT }}
+      EXTRACT_MODEL: ${{ vars.EXTRACT_MODEL }}
+      JWT_MIN_TTL: ${{ vars.JWT_MIN_TTL }}
+      JWT_MAX_TTL: ${{ vars.JWT_MAX_TTL }}
+      ENABLE_AUTO_DEL: ${{ vars.ENABLE_AUTO_DEL }}
+      AUTO_DEL_TYPE: ${{ vars.AUTO_DEL_TYPE }}
+      AUTO_DEL_TIME: ${{ vars.AUTO_DEL_TIME }}
+      AUTO_DEL_CRON: ${{ vars.AUTO_DEL_CRON }}
+      WEBHOOK_URL: ${{ vars.WEBHOOK_URL }}
+      WEBHOOK_TYPE: ${{ vars.WEBHOOK_TYPE }}
+      WEBHOOK_TEMPLATE: ${{ vars.WEBHOOK_TEMPLATE }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TELEGRAM_TEMPLATE: ${{ vars.TELEGRAM_TEMPLATE }}
+      TELEGRAM_TYPE: ${{ vars.TELEGRAM_TYPE }}
+      
+    steps:
+      - name: 检出代码仓库 - Checkout repository
+        uses: actions/checkout@v4
+      - name: 设置 Node.js - Setup Node.js
+        uses: actions/setup-node@v4
+      - name: 安装依赖 - Install dependencies
+        run: npm install
+      - name: 生成配置 - Generate config
+        run: npm run gen-config
+      - name: 部署 - Deploy
+        run: npm run deploy
+      - name: 设置密钥 - Set secrets
+        run: npm run secret
+      - name: 应用数据库迁移 - Apply database migrations
+        run: npm run db:migrations:apply

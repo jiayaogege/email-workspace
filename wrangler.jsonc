@@ -1,0 +1,57 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "alle",
+	"main": "./src/worker.ts",
+	"compatibility_date": "2025-03-01",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".open-next/assets"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"triggers": {
+		"crons": [
+			"0 0 1 1 *"
+		]
+	},
+	"vars": {
+	"ENABLE_AI_EXTRACT": "true",
+	"EXTRACT_MODEL": "google-ai-studio/gemini-2.5-flash",
+	"ENABLE_AUTO_DEL": "false",
+	"AUTO_DEL_TYPE": "auth_code,auth_link",
+	"AUTO_DEL_TIME": "3600",
+	"WEBHOOK_URL": "",
+	"WEBHOOK_TYPE": "",
+	"WEBHOOK_TEMPLATE": "",
+	"TELEGRAM_BOT_TOKEN": "",
+	"TELEGRAM_CHAT_ID": "",
+	"TELEGRAM_TEMPLATE": "",
+	"TELEGRAM_TYPE": "",
+	"JWT_MIN_TTL": "300",
+	"JWT_MAX_TTL": "6000",
+	"EMAIL_FROM": "",
+	"EMAIL_USERNAME": "",
+	"EMAIL_PASSWORD": "",
+	"EMAIL_IMAP_HOST": "imap.gmail.com",
+	"EMAIL_IMAP_PORT": "993",
+	"EMAIL_SMTP_HOST": "smtp.gmail.com",
+	"EMAIL_SMTP_PORT": "587"
+},
+	"ai": {
+		"binding": "AI",
+		"remote": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "alle",
+			"database_id": "e613f341-1000-4a1c-8456-38b7a8e4b672",
+			"remote": false
+		}
+	]
+}
