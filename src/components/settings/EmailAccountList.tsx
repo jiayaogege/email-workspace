@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useTranslation } from "react-i18next";
+import useTranslation from "@/lib/hooks/useTranslation";
 import { EmailAccount } from "@/types/email";
 import { ApiResponse } from "@/types/api";
 import { Button } from "@/components/ui/button";

@@ -168,7 +168,7 @@ export default function Settings() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
                       src={backgroundImage} 
-                      alt="Background preview" 
+                      alt={t("backgroundPreview") || "Background preview"} 
                       className="object-cover w-full h-full"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';

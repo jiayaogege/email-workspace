@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import useTranslation from "@/lib/hooks/useTranslation";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -109,7 +109,6 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
     if (value !== "custom") {
       applyPreset(value);
     } else {
-      // Reset to empty or default if needed, or keep current
       setShowAdvanced(true);
     }
   };
@@ -141,7 +140,7 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
         throw new Error((error as any).message || "Failed to add account");
       }
 
-      toast({
+      toast({ 
         title: t("success"),
         description: t("addAccount") + " " + t("success"),
       });
@@ -157,6 +156,7 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
         smtpPort: 587,
       });
       setSelectedPreset("custom");
+      setShowAdvanced(false);
       
       if (onAccountAdded) {
         onAccountAdded();
@@ -180,15 +180,15 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
           {t("addAccount")}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>{t("addAccount")}</DialogTitle>
             <DialogDescription>
-              {t("fillRequired")}
+              {t("addAccountDesc")}
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-6 py-6">
             {/* Service Provider Selection */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">{t("serviceProvider")}</Label>
@@ -214,6 +214,7 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
               <Input
                 id="email"
                 name="email"
+                type="email"
                 value={formData.email}
                 onChange={handleChange}
                 className="col-span-3"
@@ -257,68 +258,72 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
                 className="text-xs text-muted-foreground"
               >
                 {showAdvanced ? <ChevronUp className="h-3 w-3 mr-1" /> : <ChevronDown className="h-3 w-3 mr-1" />}
-                {t("advancedSettings") || "Advanced Settings"}
+                {t("advancedSettings")}
               </Button>
             </div>
             
             {showAdvanced && (
-              <>
-                <div className="col-span-4 mt-2 font-semibold text-sm">{t("imapSettings")}</div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="imapHost" className="text-right">
-                    {t("host")}
-                  </Label>
-                  <Input
-                    id="imapHost"
-                    name="imapHost"
-                    value={formData.imapHost}
-                    onChange={handleChange}
-                    className="col-span-3"
-                    placeholder="imap.example.com"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="imapPort" className="text-right">
-                    {t("port")}
-                  </Label>
-                  <Input
-                    id="imapPort"
-                    name="imapPort"
-                    type="number"
-                    value={formData.imapPort}
-                    onChange={handleChange}
-                    className="col-span-3"
-                  />
+              <div className="col-span-4 space-y-4 border rounded-md p-4 bg-muted/20">
+                <div className="space-y-4">
+                  <div className="font-medium text-sm text-primary">{t("imapSettings")}</div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="imapHost" className="text-right text-xs">
+                      {t("host")}
+                    </Label>
+                    <Input
+                      id="imapHost"
+                      name="imapHost"
+                      value={formData.imapHost}
+                      onChange={handleChange}
+                      className="col-span-3"
+                      placeholder="imap.example.com"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="imapPort" className="text-right text-xs">
+                      {t("port")}
+                    </Label>
+                    <Input
+                      id="imapPort"
+                      name="imapPort"
+                      type="number"
+                      value={formData.imapPort}
+                      onChange={handleChange}
+                      className="col-span-3"
+                    />
+                  </div>
                 </div>
 
-                <div className="col-span-4 mt-2 font-semibold text-sm">{t("smtpSettings")}</div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="smtpHost" className="text-right">
-                    {t("host")}
-                  </Label>
-                  <Input
-                    id="smtpHost"
-                    name="smtpHost"
-                    value={formData.smtpHost}
-                    onChange={handleChange}
-                    className="col-span-3"
-                    placeholder="smtp.example.com"
-                  />
+                <div className="space-y-4 pt-2 border-t">
+                  <div className="font-medium text-sm text-primary">{t("smtpSettings")}</div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="smtpHost" className="text-right text-xs">
+                      {t("host")}
+                    </Label>
+                    <Input
+                      id="smtpHost"
+                      name="smtpHost"
+                      value={formData.smtpHost}
+                      onChange={handleChange}
+                      className="col-span-3"
+                      placeholder="smtp.example.com"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="smtpPort" className="text-right text-xs">
+                      {t("port")}
+                    </Label>
+                    <Input
+                      id="smtpPort"
+                      name="smtpPort"
+                      type="number"
+                      value={formData.smtpPort}
+                      onChange={handleChange}
+                      className="col-span-3"
+                    />
+                  </div>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="smtpPort" className="text-right">
-                    {t("port")}
-                  </Label>
-                  <Input
-                    id="smtpPort"
-                    name="smtpPort"
-                    type="number"
-                    value={formData.smtpPort}
-                    onChange={handleChange}
-                    className="col-span-3"
-                  />
-                </div>
-              </>
+              </div>
             )}
           </div>
           <DialogFooter>
@@ -326,7 +331,7 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
               {t("cancel")}
             </Button>
             <Button type="submit" disabled={loading}>
-              {loading ? "..." : t("save")}
+              {loading ? t("detecting") : t("save")}
             </Button>
           </DialogFooter>
         </form>
