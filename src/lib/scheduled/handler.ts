@@ -1,10 +1,8 @@
 import emailDB from '@/lib/db/email';
 
 export default async function scheduledHandler(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     controller: ScheduledController,
     env: CloudflareEnv,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ctx: ExecutionContext
 ): Promise<void> {
 

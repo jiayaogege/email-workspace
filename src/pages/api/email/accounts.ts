@@ -1,11 +1,11 @@
-import withAuth from '../../../../lib/auth/auth';
-import { success, failure } from '../../../../types/api';
-import { EmailAccount, EmailAccountConfig } from '../../../../types/email';
+import withAuth from '@/lib/auth/auth';
+import { success, failure } from '@/types/api';
+import { EmailAccount, EmailAccountConfig } from '@/types/email';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 // 简单的内存存储（在实际应用中应该使用数据库）
-let emailAccounts: EmailAccount[] = [];
+const emailAccounts: EmailAccount[] = [];
 
 async function accountsHandler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
