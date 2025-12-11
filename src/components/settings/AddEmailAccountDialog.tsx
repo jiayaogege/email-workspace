@@ -224,19 +224,21 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
               />
             </div>
 
-            {/* Username */}
+            {/* Username - Optional for most providers */}
             <div className="space-y-2">
               <Label htmlFor="username" className="text-sm font-medium">
-                {t("smtpUsername")}
+                {t("smtpUsername")} <span className="text-muted-foreground text-xs">({t("optional")})</span>
               </Label>
               <Input
                 id="username"
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                placeholder={t("smtpUsername")}
-                required
+                placeholder={t("email")}
               />
+              <p className="text-xs text-muted-foreground">
+                大多数邮箱服务商使用邮箱地址作为用户名，留空将自动使用邮箱地址
+              </p>
             </div>
 
             {/* Password */}

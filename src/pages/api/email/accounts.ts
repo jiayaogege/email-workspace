@@ -19,8 +19,13 @@ async function accountsHandler(req: NextApiRequest, res: NextApiResponse) {
       const config: EmailAccountConfig = req.body;
 
       // 验证必填字段
-      if (!config.email || !config.username || !config.password) {
-        return failure(res, '邮箱、用户名和密码为必填项', 400);
+      if (!config.email || !config.password) {
+        return failure(res, '邮箱和密码为必填项', 400);
+      }
+
+      // 如果用户名留空，自动使用邮箱地址作为用户名
+      if (!config.username) {
+        config.username = config.email;
       }
 
       // 验证邮箱格式
