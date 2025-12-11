@@ -29,7 +29,7 @@ export function EmailAccountList() {
       console.error(error);
       toast({
         title: t("error"),
-        description: "Failed to fetch accounts",
+        description: t("fetchAccountsFailed") || "Failed to fetch accounts",
         variant: "destructive",
       });
     } finally {
@@ -48,18 +48,18 @@ export function EmailAccountList() {
       });
       
       if (!res.ok) {
-        throw new Error("Failed to delete account");
+        throw new Error(t("deleteAccountFailed") || "Failed to delete account");
       }
 
       toast({
         title: t("success"),
-        description: "Account deleted",
+        description: t("accountDeleted") || "Account deleted",
       });
       fetchAccounts();
     } catch {
       toast({
         title: t("error"),
-        description: "Failed to delete account",
+        description: t("deleteAccountFailed") || "Failed to delete account",
         variant: "destructive",
       });
     }
@@ -68,7 +68,7 @@ export function EmailAccountList() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-6">
         <div className="grid gap-1.5">
           <CardTitle>{t("emailAccounts")}</CardTitle>
           <CardDescription>
@@ -77,8 +77,8 @@ export function EmailAccountList() {
         </div>
         <AddEmailAccountDialog onAccountAdded={fetchAccounts} />
       </CardHeader>
-      <CardContent className="grid gap-4">
-        {loading && <div className="text-sm text-muted-foreground">Loading...</div>}
+      <CardContent className="px-6 grid gap-4">
+        {loading && <div className="text-sm text-muted-foreground">{t("loading")}</div>}
         {!loading && accounts.length === 0 && (
           <div className="text-sm text-muted-foreground text-center py-4">
             {t("noAccounts") || "No email accounts added yet."}

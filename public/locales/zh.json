@@ -119,5 +119,13 @@
   "defaultAccount": "默认账户",
   "optional": "可选",
   "accountAdded": "账户已添加",
-  "accountAddFailed": "添加账户失败"
+  "accountAddFailed": "添加账户失败",
+  "manageEmailAccounts": "管理您的邮箱账户，用于发送和接收邮件",
+  "fetchAccountsFailed": "获取账户失败",
+  "accountDeleted": "账户已删除",
+  "deleteAccountFailed": "删除账户失败",
+  "noAccounts": "尚未添加任何邮箱账户",
+  "deleteAccount": "删除账户",
+  "deleteAccountConfirm": "确定要删除此账户吗？",
+  "addAccountFailed": "添加账户失败"
 }
