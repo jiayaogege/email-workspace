@@ -10,9 +10,10 @@ interface OpenNextHandler {
 let handler: OpenNextHandler | undefined;
 
 if (process.env.NODE_ENV === "production") {
-  // 动态导入，避免Next.js构建错误
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const workerModule = require("../.open-next/worker.js");
+  // Use dynamic import to support top-level await in dependencies
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const workerModule = await import("../.open-next/worker.js");
   handler = workerModule.default as OpenNextHandler;
 }
 
