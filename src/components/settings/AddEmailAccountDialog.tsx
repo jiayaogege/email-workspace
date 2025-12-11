@@ -180,15 +180,15 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
           {t("addAccount")}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto px-6">
         <form onSubmit={handleSubmit}>
-          <DialogHeader>
+          <DialogHeader className="px-0">
             <DialogTitle>{t("addAccount")}</DialogTitle>
             <DialogDescription>
               {t("addAccountDesc")}
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-6 py-6">
+          <div className="grid gap-6 py-6 px-0">
             {/* Service Provider Selection */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">{t("serviceProvider")}</Label>
@@ -326,7 +326,7 @@ export function AddEmailAccountDialog({ onAccountAdded }: AddEmailAccountDialogP
               </div>
             )}
           </div>
-          <DialogFooter>
+          <DialogFooter className="px-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               {t("cancel")}
             </Button>
