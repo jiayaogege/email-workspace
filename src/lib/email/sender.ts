@@ -2,7 +2,7 @@ import { EmailSendResult, EmailAccountConfig } from '../../types/email';
 
 /**
  * 邮件发送器
- * 使用Cloudflare Workers环境支持的SMTP发送方式
+ * 使用Node.js内置的SMTP客户端发送邮件
  */
 export class EmailSender {
   private config: EmailAccountConfig;
@@ -22,42 +22,35 @@ export class EmailSender {
     fromName?: string
   ): Promise<EmailSendResult> {
     try {
-      // 在Cloudflare Workers环境中，我们可以使用SMTP over HTTP的代理服务
-      // 这里使用Mailgun API作为SMTP代理（免费额度足够个人使用）
+      // 使用nodemailer发送邮件（需要在服务器端运行）
+      const nodemailer = await import('nodemailer');
       
-      const formData = new FormData();
-      formData.append('from', `${fromName || this.config.email.split('@')[0]} <${this.config.email}>`);
-      formData.append('to', to);
-      formData.append('subject', subject);
-      formData.append('text', body);
-      
-      if (htmlBody) {
-        formData.append('html', htmlBody);
-      }
-
-      // 使用Mailgun API发送邮件
-      const domain = this.config.email.split('@')[1];
-      const response = await fetch(`https://api.mailgun.net/v3/${domain}/messages`, {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Basic ' + btoa(`api:${this.config.password}`),
+      // 创建SMTP传输器
+      const transporter = nodemailer.createTransporter({
+        host: this.config.smtpHost,
+        port: this.config.smtpPort,
+        secure: this.config.smtpPort === 465, // 465端口使用SSL
+        auth: {
+          user: this.config.username,
+          pass: this.config.password,
         },
-        body: formData,
       });
 
-      if (response.ok) {
-        const result = await response.json() as { id: string };
-        return {
-          success: true,
-          messageId: result.id,
-        };
-      } else {
-        const error = await response.text();
-        return {
-          success: false,
-          error: `发送失败: ${response.status} ${error}`,
-        };
-      }
+      // 发送邮件
+      const mailOptions = {
+        from: `${fromName || this.config.email.split('@')[0]} <${this.config.email}>`,
+        to: to,
+        subject: subject,
+        text: body,
+        html: htmlBody || body,
+      };
+
+      const result = await transporter.sendMail(mailOptions);
+      
+      return {
+        success: true,
+        messageId: result.messageId,
+      };
     } catch (error) {
       console.error('邮件发送错误:', error);
       return {
