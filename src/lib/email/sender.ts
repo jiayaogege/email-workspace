@@ -26,7 +26,7 @@ export class EmailSender {
       const nodemailer = await import('nodemailer');
       
       // 创建SMTP传输器
-      const transporter = nodemailer.createTransporter({
+      const transporter = nodemailer.createTransport({
         host: this.config.smtpHost,
         port: this.config.smtpPort,
         secure: this.config.smtpPort === 465, // 465端口使用SSL
